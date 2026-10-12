@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIGHTASTE | Farm Management System</title>
+
+<style>
+:root {
+  --green: #176b43;
+  --dark: #10452e;
+  --light: #eaf5ee;
+  --gold: #d4af37;
+  --bg: #f4f7f5;
+  --white: #ffffff;
+  --text: #202b25;
+  --border: #dfe7e1;
+  --red: #d93025;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  background: var(--dark);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  background: var(--gold);
+  color: var(--dark);
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+header h1 {
+  font-size: 22px;
+}
+
+header p {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #d9e8dd;
+}
+
+#dateTime {
+  font-size: 13px;
+}
+
+nav {
+  background: white;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+
+nav button {
+  border: none;
+  background: transparent;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 7px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+nav button.active,
+nav button:hover {
+  background: var(--green);
+  color: white;
+}
+
+main {
+  padding: 22px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.page-title {
+  margin-bottom: 20px;
+}
+
+.page-title h2 {
+  font-size: 25px;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.page-title p {
+  color: #68766d;
+  line-height: 1.6;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 3px 10px #00000005;
+}
+
+.card small {
+  color: #65746a;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 28px;
+  color: var(--green);
+  overflow-wrap: anywhere;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.panel h3 {
+  margin-bottom: 18px;
+  color: var(--dark);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd8cf;
+  border-radius: 7px;
+  font-size: 14px;
+  background: white;
+  color: var(--text);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #176b4330;
+  border-color: var(--green);
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+button.primary,
+button.secondary,
+button.danger {
+  border: none;
+  padding: 12px 17px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button.primary {
+  background: var(--green);
+  color: white;
+}
+
+button.secondary {
+  background: var(--light);
+  color: var(--dark);
+}
+
+button.danger {
+  background: #fdecea;
+  color: var(--red);
+}
+
+button:hover {
+  opacity: .88;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th, td {
+  text-align: left;
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+th {
+  background: #f1f7f2;
+  color: var(--dark);
+}
+
+tr:hover td {
+  background: #fafcfb;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.toolbar input {
+  max-width: 350px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: var(--light);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.photo-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: none;
+  margin-top: 8px;
+}
+
+.notice {
+  padding: 14px;
+  background: #fff8df;
+  border: 1px solid #efdfa4;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  background: var(--dark);
+  color: white;
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+.empty {
+  text-align: center;
+  color: #77847a;
+  padding: 25px;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  header {
+    padding: 16px;
+  }
+
+  header h1 {
+    font-size: 18px;
+  }
+
+  main {
+    padding: 13px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card h3 {
+    font-size: 23px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: auto;
+  }
+
+  .panel {
+    padding: 15px;
+  }
+
+  nav button {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+@media print {
+  header, nav, .no-print, footer {
+    display: none !important;
+  }
+
+  body, main {
+    background: white;
+    padding: 0;
+  }
+
+  .page {
+    display: none !important;
+  }
+
+  .page.active {
+    display: block !important;
+  }
+
+  .panel, .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  table {
+    min-width: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">HT</div>
+    <div>
+      <h1>HIGHTASTE</h1>
+      <p>FARM MANAGEMENT SYSTEM</p>
+    </div>
+  </div>
+  <div id="dateTime"></div>
+</header>
+
+<nav class="no-print">
+  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+  <button onclick="showPage('farmers',this)">Farmers</button>
+  <button onclick="showPage('enumerators',this)">Enumerators</button>
+  <button onclick="showPage('farms',this)">Farm Records</button>
+  <button onclick="showPage('payments',this)">Payments</button>
+  <button onclick="showPage('reports',this)">Reports</button>
+  <button onclick="showPage('backup',this)">Data Backup</button>
+</nav>
+
+<main>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+  <div class="page-title">
+    <h2>Farm Management Dashboard</h2>
+    <p>Manage farmers, field enumerators, farm locations and payments.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <small>Total Registered Farmers</small>
+      <h3 id="totalFarmers">0</h3>
+    </div>
+
+    <div class="card">
+      <small>Total Enumerators</small>
+      <h3 id="totalEnumerators">0</h3>
+    </div>
+
+    <div class="card">
+      <small>Farm Records</small>
+      <h3 id="totalFarms">0</h3>
+    </div>
+
+    <div class="card">
+      <small>Total Recorded Payments</small>
+      <h3 id="totalPayments">₦0</h3>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Quick Actions</h3>
+    <div class="form-actions no-print">
+      <button class="primary" onclick="showPage('farmers')">+ Register Farmer</button>
+      <button class="secondary" onclick="showPage('enumerators')">+ Add Enumerator</button>
+      <button class="secondary" onclick="showPage('farms')">+ Add Farm Record</button>
+      <button class="secondary" onclick="showPage('payments')">+ Record Payment</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Recently Registered Farmers</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Farmer ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Village</th>
+            <th>Enumerator</th>
+          </tr>
+        </thead>
+        <tbody id="recentFarmers"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FARMERS -->
+
+<section id="farmers" class="page">
+  <div class="page-title">
+    <h2>Farmer Registration</h2>
+    <p>Register farmers and record their personal details and locations.</p>
+  </div>
+
+  <div class="notice">
+    Every farmer receives a unique Farmer ID. Ask for permission before
+    taking photographs or collecting personal information.
+  </div>
+
+  <div class="panel">
+    <h3>Farmer Information</h3>
+
+    <form id="farmerForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Farmer Full Name *</label>
+          <input id="farmerName" required placeholder="Enter full name">
+        </div>
+
+        <div class="field">
+          <label>Phone Number *</label>
+          <input id="farmerPhone" required type="tel" placeholder="080...">
+        </div>
+
+        <div class="field">
+          <label>Gender</label>
+          <select id="farmerGender">
+            <option value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>State *</label>
+          <input id="farmerState" required placeholder="e.g. Kano">
+        </div>
+
+        <div class="field">
+          <label>Local Government Area *</label>
+          <input id="farmerLga" required placeholder="Enter LGA">
+        </div>
+
+        <div class="field">
+          <label>Ward *</label>
+          <input id="farmerWard" required placeholder="Enter ward">
+        </div>
+
+        <div class="field">
+          <label>Village / Community *</label>
+          <input id="farmerVillage" required placeholder="Enter village">
+        </div>
+
+        <div class="field">
+          <label>Enumerator *</label>
+          <select id="farmerEnumerator" required>
+            <option value="">Select enumerator</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>National ID (Optional)</label>
+          <input id="farmerNin" placeholder="Optional; collect only if needed">
+        </div>
+
+        <div class="field">
+          <label>Farmer Photograph</label>
+          <input id="farmerPhoto" type="file" accept="image/*">
+          <img id="farmerPhotoPreview" class="photo-preview" alt="Farmer preview">
+        </div>
+
+        <div class="field">
+          <label>Latitude</label>
+          <input id="farmerLat" readonly placeholder="Use GPS">
+        </div>
+
+        <div class="field">
+          <label>Longitude</label>
+          <input id="farmerLng" readonly placeholder="Use GPS">
+        </div>
+
+        <div class="field full">
+          <label>Additional Notes</label>
+          <textarea id="farmerNotes" placeholder="Additional information"></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-actions no-print">
+        <button class="secondary" type="button" onclick="getGPS('farmerLat','farmerLng')">
+          📍 Capture GPS Coordinates
+        </button>
+
+        <button class="primary" type="submit">Save Farmer</button>
+
+        <button class="secondary" type="reset" onclick="resetPhotoPreview()">
+          Clear Form
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Registered Farmers</h3>
+
+    <div class="toolbar no-print">
+      <input id="farmerSearch" placeholder="Search name, ID, phone or village..."
+        oninput="renderFarmers()">
+      <button class="secondary" onclick="exportCSV('farmers')">Export CSV</button>
+      <button class="secondary" onclick="window.print()">Print</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Farmer ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Enumerator</th>
+            <th>GPS</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="farmersTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ENUMERATORS -->
+
+<section id="enumerators" class="page">
+  <div class="page-title">
+    <h2>Enumerator Management</h2>
+    <p>Register field staff responsible for collecting farmer information.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Add New Enumerator</h3>
+
+    <form id="enumeratorForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Full Name *</label>
+          <input id="enumName" required placeholder="Enumerator name">
+        </div>
+
+        <div class="field">
+          <label>Phone Number *</label>
+          <input id="enumPhone" type="tel" required placeholder="Phone number">
+        </div>
+
+        <div class="field">
+          <label>Assigned State *</label>
+          <input id="enumState" required placeholder="State">
+        </div>
+
+        <div class="field">
+          <label>Assigned LGA *</label>
+          <input id="enumLga" required placeholder="Local government">
+        </div>
+
+        <div class="field">
+          <label>Assigned Ward</label>
+          <input id="enumWard" placeholder="Ward">
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <select id="enumStatus">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-actions no-print">
+        <button class="primary" type="submit">Register Enumerator</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Enumerator Directory</h3>
+
+    <div class="toolbar no-print">
+      <input id="enumSearch" placeholder="Search enumerators..."
+        oninput="renderEnumerators()">
+      <button class="secondary" onclick="exportCSV('enumerators')">Export CSV</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Enumerator ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>State</th>
+            <th>LGA</th>
+            <th>Ward</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="enumeratorsTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FARM RECORDS -->
+
+<section id="farms" class="page">
+  <div class="page-title">
+    <h2>Farm Records</h2>
+    <p>Record farm size, crops, GPS location and the responsible farmer.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Register Farm</h3>
+
+    <form id="farmForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Farmer *</label>
+          <select id="farmFarmer" required>
+            <option value="">Select farmer</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Crop Type *</label>
+          <select id="farmCrop" required>
+            <option value="">Select crop</option>
+            <option>Rice</option>
+            <option>Maize</option>
+            <option>Millet</option>
+            <option>Sorghum</option>
+            <option>Wheat</option>
+            <option>Groundnut</option>
+            <option>Cowpea / Beans</option>
+            <option>Soybean</option>
+            <option>Cotton</option>
+            <option>Vegetables</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Farm Size (Hectares) *</label>
+          <input id="farmSize" type="number" min="0.01" step="0.01"
+            required placeholder="e.g. 2.5">
+        </div>
+
+        <div class="field">
+          <label>Farming Season</label>
+          <select id="farmSeason">
+            <option>Rainy Season</option>
+            <option>Dry Season</option>
+            <option>All Year</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Latitude</label>
+          <input id="farmLat" readonly placeholder="Use GPS">
+        </div>
+
+        <div class="field">
+          <label>Longitude</label>
+          <input id="farmLng" readonly placeholder="Use GPS">
+        </div>
+
+        <div class="field full">
+          <label>Farm Notes</label>
+          <textarea id="farmNotes" placeholder="Soil, irrigation or other notes"></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-actions no-print">
+        <button class="secondary" type="button" onclick="getGPS('farmLat','farmLng')">
+          📍 Capture Farm GPS
+        </button>
+        <button class="primary" type="submit">Save Farm Record</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Farm Register</h3>
+
+    <div class="toolbar no-print">
+      <input id="farmSearch" placeholder="Search farm records..."
+        oninput="renderFarms()">
+      <button class="secondary" onclick="exportCSV('farms')">Export CSV</button>
+      <button class="secondary" onclick="window.print()">Print</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Farm ID</th>
+            <th>Farmer</th>
+            <th>Crop</th>
+            <th>Size (Ha)</th>
+            <th>Season</th>
+            <th>GPS</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="farmsTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+
+<section id="payments" class="page">
+  <div class="page-title">
+    <h2>Farmer Payments</h2>
+    <p>Record payments and monitor payment status.</p>
+  </div>
+
+  <div class="notice">
+    This module records payment information only. It does not send money,
+    connect to a bank, or confirm that a transfer actually occurred.
+    Verify the transaction before marking a payment as paid.
+  </div>
+
+  <div class="panel">
+    <h3>Record Payment</h3>
+
+    <form id="paymentForm">
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Farmer *</label>
+          <select id="paymentFarmer" required>
+            <option value="">Select farmer</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Amount (₦) *</label>
+          <input id="paymentAmount" type="number" min="1" step="0.01"
+            required placeholder="Amount">
+        </div>
+
+        <div class="field">
+          <label>Payment Purpose *</label>
+          <select id="paymentPurpose" required>
+            <option value="">Select purpose</option>
+            <option>Farm Support</option>
+            <option>Input Subsidy</option>
+            <option>Farmer Grant</option>
+            <option>Crop Purchase</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Payment Method</label>
+          <select id="paymentMethod">
+            <option>Bank Transfer</option>
+            <option>Cash</option>
+            <option>Mobile Money</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Transaction Reference</label>
+          <input id="paymentReference" placeholder="Transaction reference">
+        </div>
+
+        <div class="field">
+          <label>Payment Status *</label>
+          <select id="paymentStatus" required>
+            <option>Pending</option>
+            <option>Paid</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Notes</label>
+          <textarea id="paymentNotes" placeholder="Payment details"></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-actions no-print">
+        <button class="primary" type="submit">Save Payment Record</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Payment Register</h3>
+
+    <div class="toolbar no-print">
+      <input id="paymentSearch" placeholder="Search payments..."
+        oninput="renderPayments()">
+      <button class="secondary" onclick="exportCSV('payments')">Export CSV</button>
+      <button class="secondary" onclick="window.print()">Print</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>Farmer</th>
+            <th>Amount</th>
+            <th>Purpose</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="paymentsTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+
+<section id="reports" class="page">
+  <div class="page-title">
+    <h2>Reports and Statistics</h2>
+    <p>Review registration totals, farm sizes and payment summaries.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <small>Total Farm Area</small>
+      <h3 id="totalHectares">0 ha</h3>
+    </div>
+
+    <div class="card">
+      <small>Paid Amount</small>
+      <h3 id="paidAmount">₦0</h3>
+    </div>
+
+    <div class="card">
+      <small>Pending Payments</small>
+      <h3 id="pendingAmount">₦0</h3>
+    </div>
+
+    <div class="card">
+      <small>Number of Payments</small>
+      <h3 id="paymentCount">0</h3>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Summary by Crop</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Crop</th>
+            <th>Number of Farms</th>
+            <th>Total Hectares</th>
+          </tr>
+        </thead>
+        <tbody id="cropSummary"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Summary by State</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Registered Farmers</th>
+          </tr>
+        </thead>
+        <tbody id="stateSummary"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel no-print">
+    <h3>Export Reports</h3>
+    <div class="form-actions">
+      <button class="primary" onclick="exportCSV('farmers')">Download Farmers CSV</button>
+      <button class="primary" onclick="exportCSV('enumerators')">Download Enumerators CSV</button>
+      <button class="primary" onclick="exportCSV('farms')">Download Farms CSV</button>
+      <button class="primary" onclick="exportCSV('payments')">Download Payments CSV</button>
+      <button class="secondary" onclick="window.print()">Print Report / Save PDF</button>
+    </div>
+  </div>
+</section>
+
+<!-- BACKUP -->
+
+<section id="backup" class="page">
+  <div class="page-title">
+    <h2>Data Backup and Restore</h2>
+    <p>Export a backup of the data stored in this browser.</p>
+  </div>
+
+  <div class="notice">
+    Important: this version saves information in the current browser on this
+    device. It does not automatically synchronize with other phones or computers.
+    Back up your data regularly.
+  </div>
+
+  <div class="panel">
+    <h3>Download Full Backup</h3>
+    <p>Download farmer, enumerator, farm and payment records in one JSON file.</p>
+    <div class="form-actions">
+      <button class="primary" onclick="downloadBackup()">Download Backup</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Restore Backup</h3>
+    <p>Choose a backup JSON file previously downloaded from this system.</p>
+    <br>
+    <div class="field">
+      <label>Select Backup File</label>
+      <input type="file" id="restoreFile" accept=".json,application/json">
+    </div>
+    <div class="form-actions">
+      <button class="primary" onclick="restoreBackup()">Restore Backup</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Clear Local Data</h3>
+    <p>This permanently removes records stored by this app in this browser.</p>
+    <div class="form-actions">
+      <button class="danger" onclick="clearAllData()">Delete All Local Records</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  HIGHTASTE FARM MANAGEMENT SYSTEM<br>
+  Farmer Registration • GPS Mapping • Field Data • Payment Records<br>
+  <span id="footerYear"></span>
+</footer>
+
+<script>
+"use strict";
+
+/*
+ HIGHTASTE FARM MANAGEMENT SYSTEM
+
+ This standalone version uses browser localStorage.
+ It does not yet connect to Supabase or a payment provider.
+*/
+
+const STORAGE_KEY = "hightaste_farm_management_v1";
+
+let db = {
+  farmers: [],
+  enumerators: [],
+  farms: [],
+  payments: []
+};
+
+function loadDB() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+
+      db = {
+        farmers: Array.isArray(parsed.farmers) ? parsed.farmers : [],
+        enumerators: Array.isArray(parsed.enumerators) ? parsed.enumerators : [],
+        farms: Array.isArray(parsed.farms) ? parsed.farms : [],
+        payments: Array.isArray(parsed.payments) ? parsed.payments : []
+      };
+    }
+  } catch (error) {
+    alert("Could not read saved data. Please check your browser storage.");
+  }
+}
+
+function saveDB() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    updateDashboard();
+    return true;
+  } catch (error) {
+    alert("Saving failed. Browser storage may be full, especially if many photos were added. Export your backup and reduce photo sizes.");
+    return false;
+  }
+}
+
+function makeID(prefix) {
+  return prefix + "-" +
+    Date.now().toString(36).toUpperCase() + "-" +
+    Math.random().toString(36).slice(2, 6).toUpperCase();
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function formatMoney(amount) {
+  return "₦" + Number(amount || 0).toLocaleString("en-NG", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  });
+}
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString("en-GB");
+}
+
+function showPage(pageID, button) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const target = document.getElementById(pageID);
+
+  if (!target) return;
+
+  target.classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  if (button) {
+    button.classList.add("active");
+  } else {
+    const navButtons = [...document.querySelectorAll("nav button")];
+    const match = navButtons.find(btn =>
+      btn.getAttribute("onclick")?.includes("'" + pageID + "'")
+    );
+
+    if (match) match.classList.add("active");
+  }
+
+  renderAll();
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function getGPS(latID, lngID) {
+  if (!navigator.geolocation) {
+    alert("GPS is not supported by this browser.");
+    return;
+  }
+
+  if (!window.isSecureContext) {
+    alert("GPS requires a secure HTTPS website. Open the deployed website on HTTPS and allow location access.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      document.getElementById(latID).value =
+        position.coords.latitude.toFixed(7);
+
+      document.getElementById(lngID).value =
+        position.coords.longitude.toFixed(7);
+
+      alert("GPS coordinates captured successfully.");
+    },
+    error => {
+      const messages = {
+        1: "Location permission was denied. Allow location access in your browser settings.",
+        2: "Your location could not be determined. Try again outdoors.",
+        3: "GPS request timed out. Please try again."
+      };
+
+      alert(messages[error.code] || "Unable to obtain GPS coordinates.");
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 0
+    }
+  );
+}
+
+function resetPhotoPreview() {
+  const preview = document.getElementById("farmerPhotoPreview");
+  preview.src = "";
+  preview.style.display = "none";
+}
+
+document.getElementById("farmerPhoto").addEventListener("change", function() {
+  const file = this.files[0];
+  const preview = document.getElementById("farmerPhotoPreview");
+
+  if (!file) {
+    resetPhotoPreview();
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    this.value = "";
+    return;
+  }
+
+  // Compress the photo to help browser storage.
+  const reader = new FileReader();
+
+  reader.onload = event => {
+    const image = new Image();
+
+    image.onload = () => {
+      const maxSide = 500;
+      const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(image.width * scale);
+      canvas.height = Math.round(image.height * scale);
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      preview.src = canvas.toDataURL("image/jpeg", 0.65);
+      preview.style.display = "block";
+    };
+
+    image.onerror = () => alert("Unable to read this image.");
+    image.src = event.target.result;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+function renderEnumeratorOptions() {
+  const selectIDs = ["farmerEnumerator"];
+
+  selectIDs.forEach(id => {
+    const select = document.getElementById(id);
+    const previous = select.value;
+
+    select.innerHTML =
+      '<option value="">Select enumerator</option>' +
+      db.enumerators.map(e =>
+        `<option value="${escapeHTML(e.id)}">${escapeHTML(e.name)} — ${escapeHTML(e.id)}</option>`
+      ).join("");
+
+    if (db.enumerators.some(e => e.id === previous)) {
+      select.value = previous;
+    }
+  });
+}
+
+function renderFarmerOptions() {
+  ["farmFarmer", "paymentFarmer"].forEach(id => {
+    const select = document.getElementById(id);
+    const previous = select.value;
+
+    select.innerHTML =
+      '<option value="">Select farmer</option>' +
+      db.farmers.map(f =>
+        `<option value="${escapeHTML(f.id)}">${escapeHTML(f.name)} — ${escapeHTML(f.id)}</option>`
+      ).join("");
+
+    if (db.farmers.some(f => f.id === previous)) {
+      select.value = previous;
+    }
+  });
+}
+
+document.getElementById("farmerForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("farmerName").value.trim();
+  const phone = document.getElementById("farmerPhone").value.trim();
+  const state = document.getElementById("farmerState").value.trim();
+  const lga = document.getElementById("farmerLga").value.trim();
+  const ward = document.getElementById("farmerWard").value.trim();
+  const village = document.getElementById("farmerVillage").value.trim();
+  const enumeratorID = document.getElementById("farmerEnumerator").value;
+
+  if (!name || !phone || !state || !lga || !ward || !village || !enumeratorID) {
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  const duplicate = db.farmers.some(f =>
+    f.phone.replace(/\s/g, "") === phone.replace(/\s/g, "") &&
+    f.name.toLowerCase() === name.toLowerCase()
+  );
+
+  if (duplicate && !confirm("A farmer with this name and phone already exists. Save another record?")) {
+    return;
+  }
+
+  const photo = document.getElementById("farmerPhotoPreview").src;
+
+  const farmer = {
+    id: makeID("HTF"),
+    name,
+    phone,
+    gender: document.getElementById("farmerGender").value,
+    state,
+    lga,
+    ward,
+    village,
+    enumeratorID,
+    nin: document.getElementById("farmerNin").value.trim(),
+    photo: photo && photo !== window.location.href ? photo : "",
+    lat: document.getElementById("farmerLat").value,
+    lng: document.getElementById("farmerLng").value,
+    notes: document.getElementById("farmerNotes").value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  db.farmers.unshift(farmer);
+
+  if (!saveDB()) {
+    db.farmers.shift();
+    return;
+  }
+
+  this.reset();
+  resetPhotoPreview();
+
+  alert("Farmer registered successfully.\nFarmer ID: " + farmer.id);
+
+  renderAll();
+});
+
+document.getElementById("enumeratorForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const enumerator = {
+    id: makeID("HTE"),
+    name: document.getElementById("enumName").value.trim(),
+    phone: document.getElementById("enumPhone").value.trim(),
+    state: document.getElementById("enumState").value.trim(),
+    lga: document.getElementById("enumLga").value.trim(),
+    ward: document.getElementById("enumWard").value.trim(),
+    status: document.getElementById("enumStatus").value,
+    createdAt: new Date().toISOString()
+  };
+
+  db.enumerators.unshift(enumerator);
+
+  if (!saveDB()) {
+    db.enumerators.shift();
+    return;
+  }
+
+  this.reset();
+
+  alert("Enumerator registered successfully.\nEnumerator ID: " + enumerator.id);
+
+  renderAll();
+});
+
+document.getElementById("farmForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const farmerID = document.getElementById("farmFarmer").value;
+
+  const farmer = db.farmers.find(f => f.id === farmerID);
+
+  if (!farmer) {
+    alert("Please select a registered farmer.");
+    return;
+  }
+
+  const size = Number(document.getElementById("farmSize").value);
+
+  if (!Number.isFinite(size) || size <= 0) {
+    alert("Enter a valid farm size.");
+    return;
+  }
+
+  const farm = {
+    id: makeID("HTFM"),
+    farmerID,
+    farmerName: farmer.name,
+    crop: document.getElementById("farmCrop").value,
+    size,
+    season: document.getElementById("farmSeason").value,
+    lat: document.getElementById("farmLat").value,
+    lng: document.getElementById("farmLng").value,
+    notes: document.getElementById("farmNotes").value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  db.farms.unshift(farm);
+
+  if (!saveDB()) {
+    db.farms.shift();
+    return;
+  }
+
+  this.reset();
+
+  alert("Farm record saved successfully.\nFarm ID: " + farm.id);
+
+  renderAll();
+});
+
+document.getElementById("paymentForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const farmerID = document.getElementById("paymentFarmer").value;
+  const farmer = db.farmers.find(f => f.id === farmerID);
+  const amount = Number(document.getElementById("paymentAmount").value);
+  const status = document.getElementById("paymentStatus").value;
+
+  if (!farmer) {
+    alert("Please select a registered farmer.");
+    return;
+  }
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    alert("Enter a valid payment amount.");
+    return;
+  }
+
+  if (status === "Paid" &&
+      !confirm("Confirm that this payment has actually been verified as paid?")) {
+    return;
+  }
+
+  const payment = {
+    id: makeID("HTP"),
+    farmerID,
+    farmerName: farmer.name,
+    amount,
+    purpose: document.getElementById("paymentPurpose").value,
+    method: document.getElementById("paymentMethod").value,
+    reference: document.getElementById("paymentReference").value.trim(),
+    status,
+    notes: document.getElementById("paymentNotes").value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  db.payments.unshift(payment);
+
+  if (!saveDB()) {
+    db.payments.shift();
+    return;
+  }
+
+  this.reset();
+
+  alert("Payment record saved.\nPayment ID: " + payment.id);
+
+  renderAll();
+});
+
+function renderFarmers() {
+  const query = (document.getElementById("farmerSearch")?.value || "").toLowerCase();
+
+  const rows = db.farmers.filter(f =>
+    [f.id, f.name, f.phone, f.state, f.lga, f.ward, f.village]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  const body = document.getElementById("farmersTable");
+
+  body.innerHTML = rows.map(f => {
+    const e = db.enumerators.find(x => x.id === f.enumeratorID);
+    const gps = f.lat && f.lng
+      ? `<a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(f.lat + "," + f.lng)}">View Map</a>`
+      : "Not recorded";
+
+    return `<tr>
+      <td>${escapeHTML(f.id)}</td>
+      <td>${escapeHTML(f.name)}</td>
+      <td>${escapeHTML(f.phone)}</td>
+      <td>${escapeHTML([f.state, f.lga, f.ward, f.village].join(", "))}</td>
+      <td>${escapeHTML(e?.name || "Unknown")}</td>
+      <td>${gps}</td>
+      <td><button class="danger no-print" onclick="deleteRecord('farmers','${f.id}')">Delete</button></td>
+    </tr>`;
+  }).join("") || '<tr><td colspan="7" class="empty">No farmers found.</td></tr>';
+
+  document.getElementById("recentFarmers").innerHTML =
+    db.farmers.slice(0, 5).map(f => {
+      const e = db.enumerators.find(x => x.id === f.enumeratorID);
+
+      return `<tr>
+        <td>${escapeHTML(f.id)}</td>
+        <td>${escapeHTML(f.name)}</td>
+        <td>${escapeHTML(f.phone)}</td>
+        <td>${escapeHTML(f.village)}</td>
+        <td>${escapeHTML(e?.name || "Unknown")}</td>
+      </tr>`;
+    }).join("") || '<tr><td colspan="5" class="empty">No registrations yet.</td></tr>';
+}
+
+function renderEnumerators() {
+  const query = (document.getElementById("enumSearch")?.value || "").toLowerCase();
+
+  const rows = db.enumerators.filter(e =>
+    [e.id, e.name, e.phone, e.state, e.lga, e.ward, e.status]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  document.getElementById("enumeratorsTable").innerHTML =
+    rows.map(e => `<tr>
+      <td>${escapeHTML(e.id)}</td>
+      <td>${escapeHTML(e.name)}</td>
+      <td>${escapeHTML(e.phone)}</td>
+      <td>${escapeHTML(e.state)}</td>
+      <td>${escapeHTML(e.lga)}</td>
+      <td>${escapeHTML(e.ward)}</td>
+      <td><span class="badge">${escapeHTML(e.status)}</span></td>
+      <td><button class="danger no-print" onclick="deleteRecord('enumerators','${e.id}')">Delete</button></td>
+    </tr>`).join("") ||
+    '<tr><td colspan="8" class="empty">No enumerators found.</td></tr>';
+}
+
+function renderFarms() {
+  const query = (document.getElementById("farmSearch")?.value || "").toLowerCase();
+
+  const rows = db.farms.filter(f =>
+    [f.id, f.farmerName, f.crop, f.season]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  document.getElementById("farmsTable").innerHTML =
+    rows.map(f => {
+      const gps = f.lat && f.lng
+        ? `<a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(f.lat + "," + f.lng)}">View Map</a>`
+        : "Not recorded";
+
+      return `<tr>
+        <td>${escapeHTML(f.id)}</td>
+        <td>${escapeHTML(f.farmerName)}</td>
+        <td>${escapeHTML(f.crop)}</td>
+        <td>${Number(f.size).toLocaleString()}</td>
+        <td>${escapeHTML(f.season)}</td>
+        <td>${gps}</td>
+        <td><button class="danger no-print" onclick="deleteRecord('farms','${f.id}')">Delete</button></td>
+      </tr>`;
+    }).join("") ||
+    '<tr><td colspan="7" class="empty">No farm records found.</td></tr>';
+}
+
+function renderPayments() {
+  const query = (document.getElementById("paymentSearch")?.value || "").toLowerCase();
+
+  const rows = db.payments.filter(p =>
+    [p.id, p.farmerName, p.purpose, p.reference, p.status]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  document.getElementById("paymentsTable").innerHTML =
+    rows.map(p => `<tr>
+      <td>${escapeHTML(p.id)}</td>
+      <td>${escapeHTML(p.farmerName)}</td>
+      <td>${formatMoney(p.amount)}</td>
+      <td>${escapeHTML(p.purpose)}</td>
+      <td>${escapeHTML(p.method)}</td>
+      <td><span class="badge">${escapeHTML(p.status)}</span></td>
+      <td>${formatDate(p.createdAt)}</td>
+      <td>
+        ${p.status === "Pending"
+          ? `<button class="secondary no-print" onclick="markPaymentPaid('${p.id}')">Mark Paid</button>`
+          : ""}
+        <button class="danger no-print" onclick="deleteRecord('payments','${p.id}')">Delete</button>
+      </td>
+    </tr>`).join("") ||
+    '<tr><td colspan="8" class="empty">No payment records found.</td></tr>';
+}
+
+function markPaymentPaid(id) {
+  const payment = db.payments.find(p => p.id === id);
+
+  if (!payment) return;
+
+  if (!payment.reference) {
+    alert("Enter and verify the transaction reference before marking this payment as paid.");
+    return;
+  }
+
+  if (!confirm("Have you verified that the payment was actually completed?")) {
+    return;
+  }
+
+  payment.status = "Paid";
+  payment.updatedAt = new Date().toISOString();
+
+  saveDB();
+  renderAll();
+}
+
+function deleteRecord(collection, id) {
+  if (!db[collection]) return;
+
+  if (!confirm("Are you sure you want to delete this record?")) return;
+
+  if (collection === "farmers") {
+    const linkedFarm = db.farms.some(f => f.farmerID === id);
+    const linkedPayment = db.payments.some(p => p.farmerID === id);
+
+    if (linkedFarm || linkedPayment) {
+      alert("This farmer has linked farm or payment records. Delete the linked records first.");
+      return;
+    }
+  }
+
+  if (collection === "enumerators") {
+    const linked = db.farmers.some(f => f.enumeratorID === id);
+
+    if (linked) {
+      alert("This enumerator is assigned to one or more farmers. Reassign those farmers before deleting the enumerator.");
+      return;
+    }
+  }
+
+  db[collection] = db[collection].filter(item => item.id !== id);
+
+  saveDB();
+  renderAll();
+}
+
+function updateDashboard() {
+  document.getElementById("totalFarmers").textContent = db.farmers.length;
+  document.getElementById("totalEnumerators").textContent = db.enumerators.length;
+  document.getElementById("totalFarms").textContent = db.farms.length;
+
+  const paidTotal = db.payments
+    .filter(p => p.status === "Paid")
+    .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+  document.getElementById("totalPayments").textContent = formatMoney(paidTotal);
+
+  const hectares = db.farms.reduce((sum, f) => sum + Number(f.size || 0), 0);
+
+  document.getElementById("totalHectares").textContent =
+    hectares.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " ha";
+
+  document.getElementById("paidAmount").textContent = formatMoney(paidTotal);
+
+  const pendingTotal = db.payments
+    .filter(p => p.status === "Pending")
+    .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+  document.getElementById("pendingAmount").textContent = formatMoney(pendingTotal);
+  document.getElementById("paymentCount").textContent = db.payments.length;
+
+  const crops = {};
+
+  db.farms.forEach(f => {
+    if (!crops[f.crop]) crops[f.crop] = { count: 0, size: 0 };
+    crops[f.crop].count++;
+    crops[f.crop].size += Number(f.size || 0);
+  });
+
+  document.getElementById("cropSummary").innerHTML =
+    Object.entries(crops).map(([crop, data]) => `<tr>
+      <td>${escapeHTML(crop)}</td>
+      <td>${data.count}</td>
+      <td>${data.size.toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
+    </tr>`).join("") ||
+    '<tr><td colspan="3" class="empty">No farm data available.</td></tr>';
+
+  const states = {};
+
+  db.farmers.forEach(f => {
+    const state = f.state || "Unknown";
+    states[state] = (states[state] || 0) + 1;
+  });
+
+  document.getElementById("stateSummary").innerHTML =
+    Object.entries(states).map(([state, count]) => `<tr>
+      <td>${escapeHTML(state)}</td>
+      <td>${count}</td>
+    </tr>`).join("") ||
+    '<tr><td colspan="2" class="empty">No farmer data available.</td></tr>';
+}
+
+function renderAll() {
+  renderEnumeratorOptions();
+  renderFarmerOptions();
+  renderFarmers();
+  renderEnumerators();
+  renderFarms();
+  renderPayments();
+  updateDashboard();
+}
+
+function exportCSV(collection) {
+  const records = db[collection];
+
+  if (!Array.isArray(records) || records.length === 0) {
+    alert("There are no records to export.");
+    return;
+  }
+
+  const keys = [...new Set(records.flatMap(record => Object.keys(record)))];
+
+  // Exclude image data from CSV to prevent extremely large files.
+  const exportKeys = keys.filter(key => key !== "photo");
+
+  function csvCell(value) {
+    if (value === null || value === undefined) return '""';
+
+    let str = String(value);
+
+    if (/^[=+\-@\t\r]/.test(str)) {
+      str = "'" + str;
+    }
+
+    return '"' + str.replace(/"/g, '""') + '"';
+  }
+
+  const csv = [
+    exportKeys.map(csvCell).join(","),
+    ...records.map(record =>
+      exportKeys.map(key => csvCell(record[key])).join(",")
+    )
+  ].join("\r\n");
+
+  const blob = new Blob(["\uFEFF" + csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "hightaste-" + collection + "-" +
+    new Date().toISOString().slice(0, 10) + ".csv";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadBackup() {
+  const blob = new Blob(
+    [JSON.stringify({
+      application: "HIGHTASTE FARM MANAGEMENT SYSTEM",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: db
+    }, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "hightaste-backup-" +
+    new Date().toISOString().slice(0, 10) + ".json";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function restoreBackup() {
+  const input = document.getElementById("restoreFile");
+  const file = input.files[0];
+
+  if (!file) {
+    alert("Select a backup JSON file first.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    try {
+      const backup = JSON.parse(reader.result);
+      const restored = backup.data || backup;
+
+      for (const key of ["farmers", "enumerators", "farms", "payments"]) {
+        if (!Array.isArray(restored[key])) {
+          throw new Error("Invalid backup structure.");
+        }
+      }
+
+      if (!confirm("Restoring this backup will replace the current records in this browser. Continue?")) {
+        return;
+      }
+
+      const previous = db;
+
+      db = {
+        farmers: restored.farmers,
+        enumerators: restored.enumerators,
+        farms: restored.farms,
+        payments: restored.payments
+      };
+
+      if (!saveDB()) {
+        db = previous;
+        return;
+      }
+
+      renderAll();
+      alert("Backup restored successfully.");
+
+    } catch (error) {
+      alert("Invalid backup file. No records were restored.");
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+function clearAllData() {
+  const confirmation = prompt(
+    'This deletes all records saved by this app in this browser. Type DELETE to confirm.'
+  );
+
+  if (confirmation !== "DELETE") {
+    alert("No data was deleted.");
+    return;
+  }
+
+  db = {
+    farmers: [],
+    enumerators: [],
+    farms: [],
+    payments: []
+  };
+
+  if (saveDB()) {
+    renderAll();
+    alert("Local records have been deleted.");
+  }
+}
+
+function updateClock() {
+  document.getElementById("dateTime").textContent =
+    new Date().toLocaleString("en-GB", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    });
+}
+
+document.getElementById("footerYear").textContent =
+  "© " + new Date().getFullYear() + " HIGHTASTE";
+
+loadDB();
+renderAll();
+updateClock();
+setInterval(updateClock, 30000);
+</script>
+
+</body>
+</html>
